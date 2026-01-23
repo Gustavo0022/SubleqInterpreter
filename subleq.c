@@ -5,13 +5,15 @@
 int main(int argc, char* argv[]) {
 
     // Memória representada por um array
-    int mem[256] = {0}, quantidade;
+    int* mem, quantidade;
     char buffer[256] = "";
     int buf_ptr = 0;
 
     if (argc <= 1) {
         printf("Digite a quantidade de enderecos: \n");
         scanf("%d", &quantidade);
+
+        mem = (int*) calloc(quantidade,sizeof(int));
         
         for (int i = 0; i < quantidade; i++) {
             printf("%d:", i);
@@ -21,6 +23,9 @@ int main(int argc, char* argv[]) {
     else{
         FILE *arquivo = fopen(argv[1], "r");
         fscanf(arquivo,"%d", &quantidade);
+
+        mem = (int*) calloc(quantidade,sizeof(int));
+        
         for(int i = 0; i< quantidade; i++){
             fscanf(arquivo,"%d", &mem[i]);
         }
@@ -35,7 +40,7 @@ int main(int argc, char* argv[]) {
         // Debug da execução atual
         printf("\n%d: %d %d %d", pc, mem[pc], mem[pc+1], mem[pc+2]);
         
-        // Verifica se os endereços A e B são válidos para evitar crash no debug
+        // Verifica se os endereços A e B são válidos
         if (mem[pc] >= 0 && mem[pc+1] >= -1) {
              printf("\t\t@ %d: %d  @ %d: %d", mem[pc], mem[mem[pc]], mem[pc+1], (mem[pc+1] == -1 ? 0 : mem[mem[pc+1]]));
         }
@@ -74,6 +79,5 @@ int main(int argc, char* argv[]) {
     }
 
     printf("\n\nmessage: %s\n", buffer);
-
     return 0;
 }
