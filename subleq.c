@@ -32,6 +32,11 @@ int main(int argc, char* argv[]) {
         fclose(arquivo);
     }
 
+    printf("\nMemory map:");
+    for(int i = 0; i< quantidade; i+=3){
+        printf("\n%d:\t %d\t %d\t %d", i , mem[i], mem[i+1], mem[i+2]);
+    }
+
     printf("\n");
 
     int pc = 0;
