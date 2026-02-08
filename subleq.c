@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
     int* mem, quantidade;
     char buffer[256] = "";
     int buf_ptr = 0;
+    int pc_temp = 0;
 
     if (argc <= 1) {
         printf("Digite a quantidade de enderecos: \n");
@@ -30,6 +31,9 @@ int main(int argc, char* argv[]) {
             fscanf(arquivo,"%d", &mem[i]);
         }
         fclose(arquivo);
+        if(argc == 3){
+            pc_temp = atoi(argv[2]);
+        }
     }
 
     printf("\nMemory map:");
@@ -39,7 +43,7 @@ int main(int argc, char* argv[]) {
 
     printf("\n");
 
-    int pc = 0;
+    int pc = pc_temp;
     while (pc >= 0 && pc < 255) {
         
         // Debug da execução atual
