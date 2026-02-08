@@ -10,11 +10,11 @@ module Datapath (
     input  wire mdr_in, mdr_out,
     input  wire read_mem, write_mem,
     input  wire comp_alu,
-    input  wire save_flags, // <--- NOVO SINAL (Importante!)
+    input  wire save_flags,
 
     // Saídas para a Unidade de Controle
-    output reg flag_z,      // <--- Virou REG (Memória)
-    output reg flag_n       // <--- Virou REG (Memória)
+    output reg flag_z,      
+    output reg flag_n       
 );
 
     wire [15:0] bus;
@@ -63,8 +63,8 @@ module Datapath (
         .r_in(r_val),
         .comp(comp_alu),
         .result(alu_result),
-        .flag_z(alu_z_instantaneo), // Conecta aqui
-        .flag_n(alu_n_instantaneo)  // Conecta aqui
+        .flag_z(alu_z_instantaneo), 
+        .flag_n(alu_n_instantaneo) 
     );
 
 endmodule
