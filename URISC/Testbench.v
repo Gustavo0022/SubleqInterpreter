@@ -27,7 +27,7 @@ module Testbench;
 
         // Print de Cabeçalho
         $display("-------------------------------------------------------------");
-        $display("Tempo | PC  | Estado | MAR  | MDR  | R (A)| Mem[9] (Var B)");
+        $display("Tempo | PC  | Estado | MAR  | MDR  | R (A)| Mem[18](A) | Mem[19](B)");
         $display("-------------------------------------------------------------");
 
         // Solta o Reset após um tempo
@@ -51,7 +51,8 @@ module Testbench;
                 uut.caminho.MAR.data_out,      // Valor do MAR
                 uut.caminho.MDR.data_out,      // Valor do MDR
                 uut.caminho.R.data_out,        // Valor de R (Operando A)
-                uut.caminho.RAM.ram_block[9]  // Espionando a memória diretamente (Endereço 11)
+                uut.caminho.RAM.ram_block[18], // Espionando a memória diretamente
+                uut.caminho.RAM.ram_block[19]  // Espionando a memória diretamente
             );
         end
     end
