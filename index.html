@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="mt-4 flex flex-wrap gap-3">
-                    <button onclick="executar()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2 rounded-lg font-bold transition">RUN & VALIDATE</button>
+                    <button onclick="executar()" class="bg-cyan-600 hover:bg-cyan-500 text-white px-6 py-2 rounded-lg font-bold transition">RUN</button>
                     <button onclick="executarPasso()" class="bg-slate-700 hover:bg-slate-600 text-white px-6 py-2 rounded-lg font-bold transition">PASSO</button>
                     <button onclick="carregarExemplo()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2 rounded-lg font-semibold transition">Carregar ASCII</button>
                     <button onclick="limparMemoria()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2 rounded-lg font-semibold transition">Limpar memoria</button>
@@ -262,6 +262,7 @@
             }
 
             const MAX_CICLOS = 2000;
+            let terminouPorMaxCiclos = false;
 
             while (pcState >= 0 && pcState < MEM_SIZE && ciclosState < MAX_CICLOS) {
                 const a = memoriaState[pcState];
@@ -295,21 +296,29 @@
             consoleDiv.innerText = "> " + (outputState || "(nada foi impresso)");
             renderMemory();
 
+            if (ciclosState >= MAX_CICLOS) {
+                terminouPorMaxCiclos = true;
+            }
+
             const normalized = outputState.replace(/\s+$/, "");
-            if (normalized == "Hello, World!") {
-                statusDiv.innerHTML = "Sucesso! Voce imprimiu 'Hello, World!'.";
-                statusDiv.className = "mt-3 p-4 rounded-xl bg-green-900/30 border border-green-500 h-16 flex items-center text-green-400";
-            }  else if(normalized === "https://youtu.be/dQw4w9WgXcQ?si=y_k9L8Sgpy8JUhg"){
-            statusDiv.innerHTML = "Abra o link";
-            statusDiv.addEventListener('click','https://youtu.be/dQw4w9WgXcQ?si=y_k9L8Sgpy8JUhg');
+            if (terminouPorMaxCiclos) {
+                statusDiv.innerHTML = `Aviso: limite de ${MAX_CICLOS} ciclos atingido. O programa pode ter entrado em loop.`;
+                statusDiv.className = "mt-3 p-4 rounded-xl bg-amber-900/30 border border-amber-500 h-16 flex items-center text-amber-400";
+            }else if(pcState < 0 || pcState >= MEM_SIZE){
+                statusDiv.innerHTML = "Execucao encerrada (PC fora da memoria).";
+                statusDiv.className = "mt-3 p-4 rounded-xl bg-slate-800 border border-slate-700 h-16 flex items-center text-slate-300";
             }  else {
-                statusDiv.innerHTML = "Falhou. Tente novamente.";
-                statusDiv.className = "mt-3 p-4 rounded-xl bg-red-900/30 border border-red-500 h-16 flex items-center text-red-400";
+                statusDiv.innerHTML = "Execucao concluida.";
+                statusDiv.className = "mt-3 p-4 rounded-xl bg-slate-800 border border-slate-700 h-16 flex items-center text-slate-300";
             }
         }
 
         function carregarExemplo() {
-            const code = "72 101 108 108 111 44 32 87 111 114 108 100 33";
+            const code = `72 101 108 
+108 111 44 
+32 87 111 
+114 108 100 
+33 0 0`;
             editorEl.value = code;
             syncMemoryFromEditor();
         }
