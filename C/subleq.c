@@ -8,6 +8,7 @@ int main(int argc, char* argv[]) {
     int* mem, quantidade;
     char buffer[256] = "";
     int buf_ptr = 0;
+    int pc_temp = 0;
 
     if (argc <= 1) {
         printf("Digite a quantidade de enderecos: \n");
@@ -29,7 +30,11 @@ int main(int argc, char* argv[]) {
         for(int i = 0; i< quantidade; i++){
             fscanf(arquivo,"%d", &mem[i]);
         }
+        
         fclose(arquivo);
+        if(argc == 3){
+            pc_temp = atoi(argv[2]);
+        }
     }
 
     printf("\nMemory map:");
@@ -39,23 +44,20 @@ int main(int argc, char* argv[]) {
 
     printf("\n");
 
-    int pc = 0;
+    int pc = pc_temp;
     while (pc >= 0 && pc < 255) {
         
         // Debug da execução atual
-        //printf("\n%d: %d %d %d", pc, mem[pc], mem[pc+1], mem[pc+2]);
+        printf("\n%d: %d %d %d", pc, mem[pc], mem[pc+1], mem[pc+2]);
         
         // Verifica se os endereços A e B são válidos
         if (mem[pc] >= 0 && mem[pc+1] >= -1) {
-             //printf("\t\t@ %d: %d  @ %d: %d", mem[pc], mem[mem[pc]], mem[pc+1], (mem[pc+1] == -1 ? 0 : mem[mem[pc+1]]));
-            if(pc == 9){
-                printf("\nValor em 16: %d", mem[16]);
-            }
+             printf("\t\t@ %d: %d  @ %d: %d", mem[pc], mem[mem[pc]], mem[pc+1], (mem[pc+1] == -1 ? 0 : mem[mem[pc+1]]));
         }
 
         if (mem[pc+1] == -1) {
             char c = (char)mem[mem[pc]];
-            //printf("\t\tChar: mem[%d]: %d (%c)", mem[pc], mem[mem[pc]], c);
+            printf("\t\tChar: mem[%d]: %d (%c)", mem[pc], mem[mem[pc]], c);
             
             // Adiciona ao buffer de mensagem (string)
             if (buf_ptr < 255) {
@@ -70,7 +72,7 @@ int main(int argc, char* argv[]) {
             int addrB = mem[pc+1];
             int targetPC = mem[pc+2];
 
-            //printf("\t\t%d - %d = %d", mem[addrB], mem[addrA], mem[addrB] - mem[addrA]);
+            printf("\t\t%d - %d = %d", mem[addrB], mem[addrA], mem[addrB] - mem[addrA]);
             
             mem[addrB] = mem[addrB] - mem[addrA];
 
@@ -86,6 +88,6 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    //printf("\n\nmessage: %s\n", buffer);
+    printf("\n\nmessage: %s\n", buffer);
     return 0;
 }
