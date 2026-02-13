@@ -35,5 +35,6 @@ A versão do navegador permite a execução passo a passo do programa, além de 
 
 ### Verilog
 
+As informações para execução do processador em verilog estão disponíveis no [Arquvo README na pasta URISC-Verilog ](./URISC-Verilog/README.md)
 
 
