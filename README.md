@@ -38,3 +38,10 @@ A versão do navegador permite a execução passo a passo do programa, além de 
 As informações para execução do processador em verilog estão disponíveis no [Arquvo README na pasta URISC-Verilog ](./URISC-Verilog/README.md)
 
 
+### Atualizações
+
+Para verificar o estado mais atualizado deste repositório, consulte
+
+https://github.com/Gustavo0022/SubleqInterpreter
+
+
